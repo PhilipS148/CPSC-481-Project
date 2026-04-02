@@ -1,6 +1,6 @@
 
 import pygame
-from game import Grid
+from grid import Grid
 import sys
 
 pygame.init()
