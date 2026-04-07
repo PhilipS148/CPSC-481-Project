@@ -8,6 +8,7 @@ class Game:
         self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
         self.current_block = self.get_random_block()
         self.next_block = self.get_random_block()
+        self.game_over = False
 
     def get_random_block(self) :
         if len(self.blocks) == 0:
@@ -44,7 +45,11 @@ class Game:
         self.current_block = self.next_block
         self.next_block = self.get_random_block()
 
-    
+        if self.block_collide() == True :
+            self.game_over = True
+        
+        self.grid.clear_full_rows()
+            
     def rotate(self) :
         self.current_block.rotate()
         if self.block_inside() == False :
@@ -65,3 +70,9 @@ class Game:
             if self.grid.is_cell_empty(tile.row, tile.column) == False :
                 return True
         return False
+    
+    def reset(self) :
+        self.grid = Grid()
+        self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
+        self.current_block = self.get_random_block()
+        self.next_block = self.get_random_block()
