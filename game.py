@@ -71,7 +71,7 @@ class Game:
             
     def rotate(self) :
         self.current_block.rotate()
-        if self.block_inside() == False :
+        if self.block_inside() == False or self.block_collide() == True :
             self.current_block.undo_rotate()
 
     def block_inside(self) :
