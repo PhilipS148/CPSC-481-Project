@@ -53,4 +53,18 @@ def bumpiness(board) :
     ''''''
 
 def cleared_lines(board) :
-    ''''''
+    lines_full = 0
+
+    #below is basically just our is_row_full() method in grid, but using row in range instead of columns
+    
+    #loop just goes row by row (outer loop), then just checks every column(inner loop)
+    for row in range(board.num_rows):
+        full = True
+        for column in range(board.num_cols):
+            if board.grid[row][column] == 0: 
+                full = False
+                break
+        if full:
+            lines += 1 
+    return lines_full
+    
