@@ -50,7 +50,13 @@ def hole_count(board) :
     return holes
 
 def bumpiness(board) :
-    ''''''
+    heights = column_heights(board)
+    total_bumpiness = 0
+
+    for i in range(len(heights) - 1):
+        total_bumpiness += abs(heights[i] - heights[i + 1])
+
+    return total_bumpiness
 
 def cleared_lines(board) :
     lines_full = 0
