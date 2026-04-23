@@ -3,9 +3,7 @@
         - lines cleares
         - holes
         - aggregate height
-        - max_height
         - bumpiness
-        - tetris bouns
     these heuristics will be used to guide the AI into making the best decision based
     on the board state.'''
 from grid import Grid
@@ -14,6 +12,7 @@ class Heuristics:
     def __init__(self, weights = None):
         self.weights = weights if weights is not None else [1,-0.5, -0.5,-0.5]
 
+    # function used to evaluate where a piece should be placed based on heuristics
     def evaluate_board(self, board):
         score = 0
 
@@ -30,6 +29,7 @@ class Heuristics:
 
         return score
 
+    # calculate the column height of the current board state 
     def column_heights(self, board) :
         heights = []
         for column in range(board.num_cols) :
@@ -42,10 +42,12 @@ class Heuristics:
         
         return heights
 
+    # sums up the total height
     def aggregate_height(self, board) :
         heights = self.column_heights(board)
         return sum(heights)
 
+    # counts how many open spaces there are on the board
     def hole_count(self, board) :
         holes = 0
         for column in range(board.num_cols) :
@@ -57,6 +59,7 @@ class Heuristics:
                     holes += 1
         return holes
 
+    # measure the difference in height between adjacent columns
     def bumpiness(self, board) :
         heights = self.column_heights(board)
         total_bumpiness = 0
