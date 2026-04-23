@@ -1,0 +1,17 @@
+run,score,pieces_played
+1,1320,120
+2,640,77
+3,1260,114
+4,560,73
+5,2240,177
+6,820,84
+7,1380,123
+8,1140,109
+9,960,100
+10,1060,105
+
+best_score,2240
+worst_score,560
+average_score,1138.00
+median_score,1100.00
+average_pieces_played,108.20
