@@ -108,7 +108,6 @@ class Game:
                 return True
         return False
     
-    # resets the game
     def reset(self) :
         self.grid = Grid()
         self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
