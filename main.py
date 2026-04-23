@@ -1,4 +1,4 @@
-
+'''Main file where the game is ran from'''
 import pygame, sys
 from game import Game
 from colors import Colors
@@ -51,7 +51,7 @@ while True :
                 game.rotate()
         if event.type == GAME_UPDATE_EVENT and game.game_over == False :
             if auto_play:
-                agent.step(game)
+                agent.run_game(game)
             else:
                 game.move_down()
 

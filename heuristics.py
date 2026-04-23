@@ -1,76 +1,84 @@
+'''Heuristics:
+   This file will cover the heuristics for are AI agent
+        - lines cleares
+        - holes
+        - aggregate height
+        - max_height
+        - bumpiness
+        - tetris bouns
+    these heuristics will be used to guide the AI into making the best decision based
+    on the board state.'''
 from grid import Grid
 
-#Not working heuristics yet, just setting stuff up
+class Heuristics:
+    def __init__(self, weights = None):
+        self.weights = weights if weights is not None else [1,-0.5, -0.5,-0.5]
+
+    def evaluate_board(self, board):
+        score = 0
+
+        height = self.aggregate_height(board)
+        lines = self.cleared_lines(board)
+        holes = self.hole_count(board)
+        bumpiness = self.bumpiness(board)
 
 
-#This is just like the evalution method, we can just make it call the heuristics we'll come up with inside
-#The board arg will just be the board we end up with per placement(including rotations n stuff)
+        score += 1 * lines
+        score -= 0.5 * height
+        score -= 0.5 * holes
+        score -= 0.5 * bumpiness
 
-def evaluate_board(board):
-    score = 0
+        return score
 
-    #the 4 heuristic functions we talked about before (make later)
-    lines = cleared_lines(board)
-    height = aggregate_height(board)
-    holes = hole_count(board)
-    bumpiness = bumpiness(board)
+    def column_heights(self, board) :
+        heights = []
+        for column in range(board.num_cols) :
+            h = 0
+            for row in range(board.num_rows) :
+                if board.cells[row][column] != 0 :
+                    h = board.num_rows - row
+                    break
+            heights.append(h)
+        
+        return heights
 
-    #then from those 4 heuristics, they'll affect the score variable, so like:
-    score += 1.0 * lines
-    score -= 0.5 * height
-    score -= 0.5 *holes
-    score -= 0.5 *bumpiness
+    def aggregate_height(self, board) :
+        heights = self.column_heights(board)
+        return sum(heights)
 
-    return score
+    def hole_count(self, board) :
+        holes = 0
+        for column in range(board.num_cols) :
+            block_found = False
+            for row in range(board.num_rows) :
+                if board.cells[row][column] != 0 :
+                    block_found = True
+                elif block_found :
+                    holes += 1
+        return holes
 
-def column_heights(board) :
-    heights = []
-    for column in range(board.num_cols) :
-        h = 0
-        for row in range(board.num_rows) :
-            if board.grid[row][column] != 0 :
-                h = board.num_rows - row
-                break
-        heights.append(h)
-    return heights
+    def bumpiness(self, board) :
+        heights = self.column_heights(board)
+        total_bumpiness = 0
 
-def aggregate_height(board) :
-    heights = column_heights(board)
-    return sum(heights)
+        for i in range(len(heights) - 1):
+            total_bumpiness += abs(heights[i] - heights[i + 1])
 
-def hole_count(board) :
-    holes = 0
-    for column in range(board.num_cols) :
-        block_found = False
-        for row in range(board.num_rows) :
-            if board.grid[row][column] != 0 :
-                block_found = True
-            elif block_found :
-                holes += 1
-    return holes
+        return total_bumpiness
 
-def bumpiness(board) :
-    heights = column_heights(board)
-    total_bumpiness = 0
+    def cleared_lines(self, board) :
+        lines_full = 0
 
-    for i in range(len(heights) - 1):
-        total_bumpiness += abs(heights[i] - heights[i + 1])
-
-    return total_bumpiness
-
-def cleared_lines(board) :
-    lines_full = 0
-
-    #below is basically just our is_row_full() method in grid, but using row in range instead of columns
+        #below is basically just our is_row_full() method in grid, but using row in range instead of columns
     
-    #loop just goes row by row (outer loop), then just checks every column(inner loop)
-    for row in range(board.num_rows):
-        full = True
-        for column in range(board.num_cols):
-            if board.grid[row][column] == 0: 
-                full = False
-                break
-        if full:
-            lines += 1 
-    return lines_full
+        #loop just goes row by row (outer loop), then just checks every column(inner loop)
+        for row in range(board.num_rows):
+            full = True
+            for column in range(board.num_cols):
+                if board.cells[row][column] == 0: 
+                    full = False
+                    break
+            if full:
+                lines_full += 1 
+        return lines_full
     

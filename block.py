@@ -1,3 +1,5 @@
+'''This file contatins all the block logic, e.g. how they move, rotations,
+   and how they appear on the screen.'''
 from colors import Colors
 import pygame
 from position import Position

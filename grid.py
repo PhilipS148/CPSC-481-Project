@@ -1,3 +1,4 @@
+'''This file handles the basic grid functionallity'''
 import pygame
 from colors import Colors
 
@@ -6,13 +7,13 @@ class Grid :
         self.num_rows = 20
         self.num_cols = 10
         self.cell_size = 30
-        self.grid = [[0 for j in range(self.num_cols)] for i in range(self.num_rows)]
+        self.cells = [[0 for j in range(self.num_cols)] for i in range(self.num_rows)]
         self.colors = Colors.get_cell_colors()
 
     def print_grid(self) :
         for row in range(self.num_rows) :
             for column in range(self.num_cols) :
-                print(self.grid[row][column], end = "")
+                print(self.cells[row][column], end = "")
             print()
 
     def is_inside(self, row, column) :
@@ -23,34 +24,34 @@ class Grid :
     def draw(self, screen) :
         for row in range(self.num_rows) :
             for column in range(self.num_cols) :
-                cell_value = self.grid[row][column]
+                cell_value = self.cells[row][column]
                 cell_rect = pygame.Rect(column*self.cell_size + 11, row*self.cell_size + 11, 
                                         self.cell_size - 1, self.cell_size - 1 )
                 pygame.draw.rect(screen, self.colors[cell_value], cell_rect)
 
     def is_cell_empty(self, row, column) :
-        if self.grid[row][column] == 0 :
+        if self.cells[row][column] == 0 :
             return True
         return False
     
     def is_row_full(self, row) :
         for column in range(self.num_cols) :
-            if self.grid[row][column] == 0 :
+            if self.cells[row][column] == 0 :
                 return False
         return True
     
     def clear_row(self, row) :
         for column in range(self.num_cols) :
-            self.grid[row][column] = 0
+            self.cells[row][column] = 0
 
     def move_rows_down(self, start_row, num_rows) :
         for column in range(self.num_cols) :
-            self.grid[start_row+num_rows][column] = self.grid[start_row][column]
-            self.grid[start_row][column] = 0
+            self.cells[start_row+num_rows][column] = self.cells[start_row][column]
+            self.cells[start_row][column] = 0
 
     def clear_full_rows(self) :
         completed_rows = 0
-        for row in range(self.num_rows-1, 0, -1) :
+        for row in range(self.num_rows-1, -1, -1) :
             if self.is_row_full(row) == True :
                 self.clear_row(row)
                 completed_rows += 1
