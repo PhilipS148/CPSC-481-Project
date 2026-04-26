@@ -5,7 +5,7 @@ from datetime import datetime
 
 from game import Game
 from agent import Agent
-
+from config import DEFAULT_WEIGHTS
 
 def run_single_game(weights=None, seed=None):
     if seed is not None:
@@ -27,8 +27,8 @@ def run_single_game(weights=None, seed=None):
         "pieces_played": pieces_played
     }
 
-
-def run_benchmark(num_runs=10, weights=None, save_csv=True):
+#                  weights in order of [lines(+), height(-), holes(-), bumpiness(-)]
+def run_benchmark(num_runs=10, weights= DEFAULT_WEIGHTS , save_csv=True):
     results = []
 
     for run_number in range(1, num_runs + 1):

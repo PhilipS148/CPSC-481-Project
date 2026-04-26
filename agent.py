@@ -6,7 +6,7 @@ from heuristics import Heuristics
 import copy
 
 class Agent :
-    def __init__(self, weights = None) :
+    def __init__(self, weights) :
         self.heuristics = Heuristics(weights)
 
     # tries every possible move and scores each using the heuristics to find the best

@@ -3,7 +3,7 @@ import pygame, sys
 from game import Game
 from colors import Colors
 from agent import Agent
-
+from config import DEFAULT_WEIGHTS
 pygame.init()
 
 title_font = pygame.font.Font(None, 40)
@@ -23,7 +23,7 @@ pygame.display.set_caption("Tetris")
 clock = pygame.time.Clock()
 
 game = Game()
-agent = Agent()
+agent = Agent(DEFAULT_WEIGHTS)
 auto_play = False
 
 GAME_UPDATE_EVENT = pygame.USEREVENT + 1
