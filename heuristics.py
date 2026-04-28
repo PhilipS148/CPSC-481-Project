@@ -15,17 +15,22 @@ class Heuristics:
     # function used to evaluate where a piece should be placed based on heuristics
     def evaluate_board(self, board, rows_cleared):
         
-        w_lines, w_height, w_holes, w_bumpiness = self.weights
+        w_lines, w_height, w_holes, w_bumpiness, w_max_height = self.weights
 
         height = self.aggregate_height(board)
         holes = self.hole_count(board)
         bumpiness = self.bumpiness(board)
 
+        max_height = self.max_height(board)
+        
         score = 0
         score += w_lines * rows_cleared
         score += w_height * height
         score += w_holes * holes
         score += w_bumpiness * bumpiness
+
+        #possible new weight?
+        score += w_max_height * max_height
 
         return score
 
@@ -85,3 +90,7 @@ class Heuristics:
                 lines_full += 1 
         return lines_full
     
+    def max_height(self, board):
+        heights = self.column_heights(board)
+
+        return max(heights)
