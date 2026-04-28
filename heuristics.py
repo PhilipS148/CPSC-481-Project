@@ -9,21 +9,20 @@
 from grid import Grid
 
 class Heuristics:
-    def __init__(self, weights = None):
+    def __init__(self, weights):
         self.weights = weights 
 
     # function used to evaluate where a piece should be placed based on heuristics
-    def evaluate_board(self, board):
-        score = 0
+    def evaluate_board(self, board, rows_cleared):
+        
         w_lines, w_height, w_holes, w_bumpiness = self.weights
 
         height = self.aggregate_height(board)
-        lines = self.cleared_lines(board)
         holes = self.hole_count(board)
         bumpiness = self.bumpiness(board)
 
-
-        score += w_lines * lines
+        score = 0
+        score += w_lines * rows_cleared
         score += w_height * height
         score += w_holes * holes
         score += w_bumpiness * bumpiness

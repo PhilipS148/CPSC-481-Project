@@ -65,6 +65,7 @@ class Game:
     def lock_block(self) :
         tiles = self.current_block.get_cell_position()
         locked_above = False
+
         for position in tiles :
             if position.row < 0:
                 locked_above = True
@@ -79,6 +80,8 @@ class Game:
         
         if locked_above or self.block_collide() == True :
             self.game_over = True
+            
+        return rows_cleared
         
     # rotation logic      
     def rotate(self) :

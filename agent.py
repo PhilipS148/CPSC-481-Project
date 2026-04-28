@@ -16,11 +16,14 @@ class Agent :
 
         for rotation in range(4) :
             for column in range(game.grid.num_cols) :
-                simulate = self.simulate_move(game, rotation, column)
-                if simulate is None:
-                    continue
+                result = self.simulate_move(game, rotation, column)
 
-                score = self.heuristics.evaluate_board(simulate.grid)
+                if result is None:
+                    continue
+                    
+                simulate, rows_cleared = result
+
+                score = self.heuristics.evaluate_board(simulate.grid, rows_cleared)
                 if score > highest_score :
                     highest_score = score
                     best_move = (rotation, column)
@@ -54,9 +57,9 @@ class Agent :
         if not simulate.block_inside() :
             return None
 
-        simulate.lock_block()
+        rows_cleared = simulate.lock_block()
 
-        return simulate
+        return simulate, rows_cleared
 
     # executes the chosen move on the actual game
     def place_piece(self, game, rotation, column) :
