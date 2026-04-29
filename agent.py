@@ -37,17 +37,16 @@ class Agent :
         simulate.grid.cells = copy.deepcopy(game.grid.cells)
         simulate.current_block = copy.deepcopy(game.current_block)
         simulate.next_block = copy.deepcopy(game.next_block)
+        
         simulate.current_block.rotation_state = rotation 
 
-        # shifts the block into the correct position
-        while simulate.current_block.column_offset < column :
-            simulate.current_block.move(0,1)
-        while simulate.current_block.column_offset > column :
-            simulate.current_block.move(0,-1)
+        min_cell_col = min(pos.column for pos in simulate.current_block.cells[rotation])
 
-        if not simulate.block_inside() or simulate.block_collide() :
+        simulate.current_block.column_offset = column - min_cell_col
+
+        if not simulate.block_inside() or simulate.block_collide():
             return None
- 
+
         while True :
             simulate.current_block.move(1, 0)
             if not simulate.block_inside() or simulate.block_collide() :
@@ -64,7 +63,9 @@ class Agent :
     # executes the chosen move on the actual game
     def place_piece(self, game, rotation, column) :
         game.current_block.rotation_state = rotation
-        game.current_block.column_offset = column
+        min_cell_col = min(pos.column for pos in game.current_block.cells[rotation])
+        game.current_block.column_offset = column - min_cell_col
+
         original_block = game.current_block
         
         while game.current_block is original_block and not game.game_over :
