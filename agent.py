@@ -40,8 +40,11 @@ class Agent :
         
         simulate.current_block.rotation_state = rotation 
 
-        min_cell_col = min(pos.column for pos in simulate.current_block.cells[rotation])
-
+        col_values = []
+        for pos in simulate.current_block.cells[rotation] :
+            col_values.append(pos.column)
+        
+        min_cell_col = min(col_values)
         simulate.current_block.column_offset = column - min_cell_col
 
         if not simulate.block_inside() or simulate.block_collide():
@@ -63,7 +66,12 @@ class Agent :
     # executes the chosen move on the actual game
     def place_piece(self, game, rotation, column) :
         game.current_block.rotation_state = rotation
-        min_cell_col = min(pos.column for pos in game.current_block.cells[rotation])
+        
+        col_values = []
+        for pos in game.current_block.cells[rotation] :
+            col_values.append(pos.column)
+        
+        min_cell_col = min(col_values)
         game.current_block.column_offset = column - min_cell_col
 
         original_block = game.current_block
