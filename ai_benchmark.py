@@ -27,7 +27,7 @@ def run_single_game(weights=None, seed=None):
         "pieces_played": pieces_played
     }
 
-#                  weights in order of [lines(+), height(-), holes(-), bumpiness(-)]
+# can change weight preset in config file later
 def run_benchmark(num_runs=10, weights= DEFAULT_WEIGHTS , save_csv=True):
     results = []
 
@@ -74,5 +74,48 @@ def run_benchmark(num_runs=10, weights= DEFAULT_WEIGHTS , save_csv=True):
     return results
 
 
+#below is function to try and find more 'optimal' weight values, since before was just random choice, function is sort of based off run_benchmark() above
+
+def optimal_weight_search(num_trials = 50, runs_per_trial = 10):
+    best_weights = None
+    best_avg_score = float("-inf")
+    best_avg_pieces = 0
+
+    #below is just assigning random weights (between two values) per run to find best ones
+
+    for trial in range(1, num_trials + 1):
+        weights = [
+            random.uniform(0.5,3.0), #lines
+            random.uniform(-2, -0.1), #agg height
+            random.uniform(-4,-0.5), #holes
+            random.uniform(-2.0, -0.5), #bumpiness
+            random.uniform(-3.0, -0.2), #max height
+        ]
+    
+        results = run_benchmark(num_runs=runs_per_trial, weights=weights, save_csv=False)
+
+        #reads results and interprets like function above
+        scores = [r["score"] for r in results]
+        pieces = [r["pieces_played"] for r in results]
+
+        avg_score = statistics.mean(scores)
+        avg_pieces = statistics.mean(pieces)
+
+        print(f"\nTrial {trial}/{num_trials}")
+        print(f"Weights: {[round(w, 3) for w in weights]}")
+        print(f"Average Score: {avg_score:.2f}")
+        print(f"Average Pieces: {avg_pieces:.2f}")
+
+        if avg_score > best_avg_score:
+            best_avg_score = avg_score
+            best_avg_pieces = avg_pieces
+            best_weights = weights
+
+    print(f"\n=== Optimal Weights from Trial ===")
+    print(f"Best Weights = {best_weights}")
+    print(f"Best Average Score from Trials: {best_avg_score:.2f}")
+    print(f"Best Average Pieces Played from Trials: {best_avg_pieces:.2f}")
+
+
 if __name__ == "__main__":
-    run_benchmark(num_runs=10)
+    optimal_weight_search(num_trials=50, runs_per_trial=10)
