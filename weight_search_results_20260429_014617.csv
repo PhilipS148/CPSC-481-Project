@@ -1,0 +1,12 @@
+trial,lines_weight,height_weight,holes_weight,bumpiness_weight,max_height_weight,average_score,median_score,average_pieces
+1,1.9052,-1.9098,-2.0748,-1.2317,-2.2287,7526,472.9
+2,2.7301,-1.0075,-1.4124,-1.3169,-0.806,1828,150.4
+3,2.6672,-0.865,-0.7834,-1.8723,-1.1332,1060,104.3
+4,0.8004,-1.6862,-3.9609,-1.6079,-1.3844,8326,527.6
+5,1.0152,-1.4482,-3.6975,-0.5064,-2.1941,40792,2165.4
+
+BEST_WEIGHTS
+lines,height,holes,bumpiness,max_height
+1.0152,-1.4482,-3.6975,-0.5064,-2.1941
+best_average_score,40792
+best_average_pieces,2165.4
