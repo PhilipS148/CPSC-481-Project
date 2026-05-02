@@ -143,7 +143,6 @@ def optimal_weight_search(num_trials = 10, runs_per_trial = 10, save_csv=True):
                 "bumpiness_weight",
                 "max_height_weight",
                 "average_score",
-                "median_score",
                 "average_pieces"
             ])
 

@@ -8,5 +8,6 @@ DEFAULT_WEIGHTS =     [   1.0  ,  -0.5,      -3.5,       -0.8,            -0.7  
 
 #Below we can add other weight presets for fine-tuning:
 
-#Preset 2 = []
+#P2 is made up form 5 Trials (50 runs)
+Preset_2 = [1.0152,-1.4482,-3.6975,-0.5064,-2.1941]
 #Preset 3 = []
