@@ -1,4 +1,12 @@
-'''Covers the main game functionallity'''
+'''
+Covers the main game functionallity such as:
+    - Scoring
+    - Piece movment
+    - Block rotations
+    - Collision detections
+
+'''
+
 from grid import Grid
 from blocks import *
 import random
@@ -12,7 +20,6 @@ class Game:
         self.game_over = False
         self.score = 0
     
-    # function to update the score
     def update_score(self, lines_cleared, move_down_points):
         if lines_cleared == 1:
             self.score += 40
@@ -24,19 +31,20 @@ class Game:
             self.score += 1200
         self.score += move_down_points
 
-    # spawing random blocks
+
     def get_random_block(self) :
         if len(self.blocks) == 0:
             self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
+        
         block = random.choice(self.blocks)
         self.blocks.remove(block)
         return block
     
-    # User interface for game
+    
     def draw(self,screen) :
         self.grid.draw(screen)
         self.current_block.draw(screen, 11, 11)
-        
+
         if self.next_block.id == 3:
             self.next_block.draw(screen, 255, 290)
         elif self.next_block.id == 4:
@@ -44,7 +52,6 @@ class Game:
         else:
             self.next_block.draw(screen, 270, 270)
 
-    # move functionallity 
     def move_left(self) :
         self.current_block.move(0,-1)
         if self.block_inside() == False or self.block_collide() == True :
@@ -61,7 +68,6 @@ class Game:
             self.current_block.move(-1,0)
             self.lock_block()
     
-    # sets block in place
     def lock_block(self) :
         tiles = self.current_block.get_cell_position()
         locked_above = False
@@ -70,6 +76,7 @@ class Game:
             if position.row < 0:
                 locked_above = True
                 continue
+
             self.grid.cells[position.row][position.column] = self.current_block.id
         
         self.current_block = self.next_block
@@ -83,25 +90,28 @@ class Game:
             
         return rows_cleared
         
-    # rotation logic      
+         
     def rotate(self) :
         self.current_block.rotate()
+
         if self.block_inside() == False or self.block_collide() == True :
             self.current_block.undo_rotate()
 
-    # ensurs bound checking making sure the block does not go outside the grid
+
     def block_inside(self) :
         tiles = self.current_block.get_cell_position()
+
         for tile in tiles :
             if tile.column < 0 or tile.column >= self.grid.num_cols :
                 return False
             if tile.row >= self.grid.num_rows :
                 return False
+        
         return True
     
-    # collision detection making sure block sit ontop of each other and don't go through eachother 
     def block_collide(self) :
         tiles = self.current_block.get_cell_position()
+
         for tile in tiles :
             if tile.column < 0 or tile.column >= self.grid.num_cols :
                 return True
@@ -109,6 +119,7 @@ class Game:
                 return True
             if tile.row >= 0 and self.grid.is_cell_empty(tile.row, tile.column) == False :
                 return True
+        
         return False
     
     def reset(self) :

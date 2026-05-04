@@ -1,11 +1,14 @@
-'''Heuristics:
+'''
+Heuristics:
    This file will cover the heuristics for are AI agent
         - lines cleares
         - holes
         - aggregate height
         - bumpiness
     these heuristics will be used to guide the AI into making the best decision based
-    on the board state.'''
+    on the board state.
+    
+'''
 from grid import Grid
 
 class Heuristics:

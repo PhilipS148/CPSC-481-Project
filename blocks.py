@@ -1,5 +1,8 @@
-'''This file contains each block class for all the tetriminos, 
-   IBlock, OBlock, LBlock, TBlock, SBlock, ZBlock, JBlock'''
+'''
+This file contains each block class for all the tetriminos, 
+IBlock, OBlock, LBlock, TBlock, SBlock, ZBlock, JBlock
+
+'''
 from block import Block
 from position import Position
 
