@@ -16,3 +16,6 @@ Names: Philip Sanchez, Joshua Higareda, Anup Gurung
 * Heuristic weight values can be changed in 'config.py'
 * To change weights for benchmarks, change the 'DEFAULT_WEIGHTS' paramter on line 31 of ai_benchmark.py, to any preset from 'config.py'
 * The amount of trials AND the number of runs per trial done can be changed on line 178 of ai_benchmark.py, in case you want a shorter or longer one 
+
+# GitHub Repository Link
+* https://github.com/PhilipS148/CPSC-481-Project.git
